@@ -60,7 +60,6 @@ export const useStoreCartItemQuantity = (
 	const [ quantity, setQuantity ] = useState< number >( cartItemQuantity );
 	const [ debouncedQuantity ] = useDebounce< number >( quantity, 400 );
 	const previousDebouncedQuantity = usePrevious( debouncedQuantity );
-
 	const { removeItemFromCart, changeCartItemQuantity } =
 		useDispatch( CART_STORE_KEY );
 
