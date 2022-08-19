@@ -45,6 +45,7 @@ interface RemovableListItemProps {
 	prefix?: string | JSX.Element;
 	showLabel?: boolean;
 	displayStyle: string;
+	chipColor: string;
 	removeCallback?: () => void;
 }
 
@@ -57,6 +58,7 @@ interface RemovableListItemProps {
  * @param {string}   [listItem.prefix='']      Prefix shown before item name.
  * @param {Function} listItem.removeCallback   Callback to remove item.
  * @param {string}   listItem.displayStyle     Whether it's a list or chips.
+ * @param {string}   listItem.chipColor        BG / border color option for chips.
  * @param {boolean}  [listItem.showLabel=true] Should the label be shown for
  *                                             this item?
  */
@@ -67,6 +69,7 @@ export const renderRemovableListItem = ( {
 	removeCallback = () => null,
 	showLabel = true,
 	displayStyle,
+	chipColor,
 }: RemovableListItemProps ) => {
 	const prefixedName = prefix ? (
 		<>
@@ -100,6 +103,9 @@ export const renderRemovableListItem = ( {
 					onRemove={ removeCallback }
 					radius="large"
 					ariaLabel={ removeText }
+					style={ {
+						borderColor: chipColor,
+					} }
 				/>
 			) : (
 				<span className="wc-block-active-filters__list-item-name">

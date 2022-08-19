@@ -89,6 +89,7 @@ const ActiveFiltersBlock = ( {
 					}
 				},
 				displayStyle: blockAttributes.displayStyle,
+				chipColor: blockAttributes.chipColor,
 			} );
 		} );
 	}, [
@@ -96,6 +97,7 @@ const ActiveFiltersBlock = ( {
 		productStockStatus,
 		setProductStockStatus,
 		blockAttributes.displayStyle,
+		blockAttributes.chipColor,
 		filteringForPhpTemplate,
 	] );
 
@@ -114,11 +116,13 @@ const ActiveFiltersBlock = ( {
 				}
 			},
 			displayStyle: blockAttributes.displayStyle,
+			chipColor: blockAttributes.chipColor,
 		} );
 	}, [
 		minPrice,
 		maxPrice,
 		blockAttributes.displayStyle,
+		blockAttributes.chipColor,
 		setMinPrice,
 		setMaxPrice,
 		filteringForPhpTemplate,
@@ -203,12 +207,14 @@ const ActiveFiltersBlock = ( {
 					setProductRatings( newRatings );
 				},
 				displayStyle: blockAttributes.displayStyle,
+				chipColor: blockAttributes.chipColor,
 			} );
 		} );
 	}, [
 		productRatings,
 		setProductRatings,
 		blockAttributes.displayStyle,
+		blockAttributes.chipColor,
 		filteringForPhpTemplate,
 	] );
 
@@ -264,6 +270,7 @@ const ActiveFiltersBlock = ( {
 									'woo-gutenberg-products-block'
 								),
 								displayStyle: blockAttributes.displayStyle,
+								chipColor: blockAttributes.chipColor,
 							} ) }
 							{ renderRemovableListItem( {
 								type: __(
@@ -275,6 +282,7 @@ const ActiveFiltersBlock = ( {
 									'woo-gutenberg-products-block'
 								),
 								displayStyle: blockAttributes.displayStyle,
+								chipColor: blockAttributes.chipColor,
 							} ) }
 						</>
 					) : (

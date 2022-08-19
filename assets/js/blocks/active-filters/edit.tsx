@@ -2,7 +2,11 @@
  * External dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
+import {
+	InspectorControls,
+	PanelColorSettings,
+	useBlockProps,
+} from '@wordpress/block-editor';
 import HeadingToolbar from '@woocommerce/editor-components/heading-toolbar';
 import BlockTitle from '@woocommerce/editor-components/block-title';
 import type { BlockEditProps } from '@wordpress/blocks';
@@ -27,11 +31,47 @@ const Edit = ( {
 	attributes,
 	setAttributes,
 }: BlockEditProps< Attributes > ) => {
-	const { className, displayStyle, heading, headingLevel } = attributes;
+	const {
+		className,
+		displayStyle,
+		heading,
+		headingLevel,
+		chipColor,
+		textColor,
+	} = attributes;
 
 	const blockProps = useBlockProps( {
 		className,
+		style: {
+			color: textColor,
+		},
 	} );
+
+	const colorSettings = [
+		{
+			value: textColor,
+			onChange: ( newTextColor: Attributes[ 'textColor' ] ) =>
+				setAttributes( {
+					textColor: newTextColor,
+				} ),
+			label: __( 'Text', 'woo-gutenberg-products-block' ),
+		},
+		...( displayStyle === 'chips'
+			? [
+					{
+						value: chipColor,
+						onChange: ( newChipColor: Attributes[ 'chipColor' ] ) =>
+							setAttributes( {
+								chipColor: newChipColor,
+							} ),
+						label: __(
+							'Chip Color',
+							'woo-gutenberg-products-block'
+						),
+					},
+			  ]
+			: [] ),
+	];
 
 	const getInspectorControls = () => {
 		return (
@@ -85,6 +125,11 @@ const Edit = ( {
 						}
 					/>
 				</PanelBody>
+				<PanelColorSettings
+					title={ __( 'Color', 'woo-gutenberg-products-block' ) }
+					disableCustomColors={ false }
+					colorSettings={ colorSettings }
+				></PanelColorSettings>
 			</InspectorControls>
 		);
 	};
