@@ -60,17 +60,28 @@ registerBlockType( metadata, {
 	edit,
 	// Save the props to post content.
 	save( { attributes }: { attributes: Attributes } ) {
-		const { className, displayStyle, heading, headingLevel } = attributes;
+		const {
+			className,
+			displayStyle,
+			heading,
+			headingLevel,
+			textColor,
+			chipColor,
+		} = attributes;
 		const data = {
 			'data-display-style': displayStyle,
 			'data-heading': heading,
 			'data-heading-level': headingLevel,
+			'data-chip-color': chipColor,
 		};
 
 		return (
 			<div
 				{ ...useBlockProps.save( {
 					className: classNames( 'is-loading', className ),
+					style: {
+						color: textColor,
+					},
 				} ) }
 				{ ...data }
 			>

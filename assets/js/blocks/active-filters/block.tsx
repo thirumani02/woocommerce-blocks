@@ -146,13 +146,18 @@ const ActiveFiltersBlock = ( {
 				<ActiveAttributeFilters
 					attributeObject={ attributeObject }
 					displayStyle={ blockAttributes.displayStyle }
+					chipColor={ blockAttributes.chipColor }
 					slugs={ attribute.slug }
 					key={ attribute.attribute }
 					operator={ attribute.operator }
 				/>
 			);
 		} );
-	}, [ productAttributes, blockAttributes.displayStyle ] );
+	}, [
+		productAttributes,
+		blockAttributes.displayStyle,
+		blockAttributes.chipColor,
+	] );
 
 	const [ productRatings, setProductRatings ] =
 		useQueryStateByKey( 'ratings' );

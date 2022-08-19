@@ -23,6 +23,7 @@ import { removeAttributeFilterBySlug } from '../../utils/attributes-query';
 
 interface ActiveAttributeFiltersProps {
 	displayStyle: string;
+	chipColor: string;
 	operator: 'and' | 'in';
 	slugs: string[];
 	attributeObject: AttributeObject;
@@ -36,12 +37,14 @@ interface ActiveAttributeFiltersProps {
  * @param {Array}  props.slugs           The slugs for attributes.
  * @param {string} props.operator        The operator for the filter.
  * @param {string} props.displayStyle    The style used for displaying the filters.
+ * @param {string} props.chipColor       The background / border color option for the chips.
  */
 const ActiveAttributeFilters = ( {
 	attributeObject,
 	slugs = [],
 	operator = 'in',
 	displayStyle,
+	chipColor,
 }: ActiveAttributeFiltersProps ) => {
 	const { results, isLoading } = useCollection( {
 		namespace: '/wc/store/v1',
@@ -131,6 +134,7 @@ const ActiveAttributeFilters = ( {
 						},
 						showLabel: false,
 						displayStyle,
+						chipColor,
 					} );
 				} ) }
 			</ul>

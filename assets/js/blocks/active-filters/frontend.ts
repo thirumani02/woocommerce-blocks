@@ -16,6 +16,7 @@ const getProps = ( el: HTMLElement ) => {
 			displayStyle:
 				el.dataset.displayStyle ||
 				metadata.attributes.displayStyle.default,
+			chipColor: el.dataset.chipColor || '',
 			heading: el.dataset.heading || blockAttributes.heading.default,
 			headingLevel: el.dataset.headingLevel
 				? parseInt( el.dataset.headingLevel, 10 )
