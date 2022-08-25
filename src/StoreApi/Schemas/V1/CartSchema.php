@@ -4,6 +4,7 @@ namespace Automattic\WooCommerce\StoreApi\Schemas\V1;
 use Automattic\WooCommerce\StoreApi\SchemaController;
 use Automattic\WooCommerce\StoreApi\Utilities\CartController;
 use Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema;
+use Automattic\WooCommerce\Blocks\Package;
 use WC_Tax;
 use WP_Error;
 
@@ -106,7 +107,7 @@ class CartSchema extends AbstractSchema {
 	 * @return array
 	 */
 	public function get_properties() {
-		return [
+		$schema = [
 			'coupons'                 => [
 				'description' => __( 'List of applied cart coupons.', 'woo-gutenberg-products-block' ),
 				'type'        => 'array',
@@ -162,16 +163,6 @@ class CartSchema extends AbstractSchema {
 				'type'        => 'number',
 				'context'     => [ 'view', 'edit' ],
 				'readonly'    => true,
-			],
-			'cross_sells'             => [
-				'description' => __( 'List of cross-sells items related to cart items.', 'woo-gutenberg-products-block' ),
-				'type'        => 'array',
-				'context'     => [ 'view', 'edit' ],
-				'readonly'    => true,
-				'items'       => [
-					'type'       => 'object',
-					'properties' => $this->force_schema_readonly( $this->cross_sells_item_schema->get_properties() ),
-				],
 			],
 			'needs_payment'           => [
 				'description' => __( 'True if the cart needs payment. False for carts with only free products and no shipping costs.', 'woo-gutenberg-products-block' ),
@@ -319,6 +310,20 @@ class CartSchema extends AbstractSchema {
 			],
 			self::EXTENDING_KEY       => $this->get_extended_schema( self::IDENTIFIER ),
 		];
+
+		if ( Package::feature()->is_feature_plugin_build() ) {
+			$schema['cross_sells'] = [
+				'description' => __( 'List of cross-sells items related to cart items.', 'woo-gutenberg-products-block' ),
+				'type'        => 'array',
+				'context'     => [ 'view', 'edit' ],
+				'readonly'    => true,
+				'items'       => [
+					'type'       => 'object',
+					'properties' => $this->force_schema_readonly( $this->cross_sells_item_schema->get_properties() ),
+				],
+			];
+		}
+		return $schema;
 	}
 
 	/**
@@ -341,10 +346,7 @@ class CartSchema extends AbstractSchema {
 		// Get shipping packages to return in the response from the cart.
 		$shipping_packages = $has_calculated_shipping ? $controller->get_shipping_packages() : [];
 
-		// Get visible cross sells products.
-		$cross_sells = array_filter( array_map( 'wc_get_product', $cart->get_cross_sells() ), 'wc_products_array_filter_visible' );
-
-		return [
+		$response = [
 			'coupons'                 => $this->get_item_responses_from_schema( $this->coupon_schema, $cart->get_applied_coupons() ),
 			'shipping_rates'          => $this->get_item_responses_from_schema( $this->shipping_rate_schema, $shipping_packages ),
 			'shipping_address'        => $this->shipping_address_schema->get_item_response( wc()->customer ),
@@ -352,7 +354,6 @@ class CartSchema extends AbstractSchema {
 			'items'                   => $this->get_item_responses_from_schema( $this->item_schema, $cart->get_cart() ),
 			'items_count'             => $cart->get_cart_contents_count(),
 			'items_weight'            => wc_get_weight( $cart->get_cart_contents_weight(), 'g' ),
-			'cross_sells'             => $this->get_item_responses_from_schema( $this->cross_sells_item_schema, $cross_sells ),
 			'needs_payment'           => $cart->needs_payment(),
 			'needs_shipping'          => $cart->needs_shipping(),
 			'has_calculated_shipping' => $has_calculated_shipping,
@@ -378,6 +379,15 @@ class CartSchema extends AbstractSchema {
 			'payment_requirements'    => $this->extend->get_payment_requirements(),
 			self::EXTENDING_KEY       => $this->get_extended_data( self::IDENTIFIER ),
 		];
+
+		if ( Package::feature()->is_feature_plugin_build() ) {
+			// Get visible cross sells products.
+			$cross_sells = array_filter( array_map( 'wc_get_product', $cart->get_cross_sells() ), 'wc_products_array_filter_visible' );
+
+			$response['cross_sells'] = $this->get_item_responses_from_schema( $this->cross_sells_item_schema, $cross_sells );
+		}
+
+		return $response;
 	}
 
 	/**
