@@ -23,9 +23,6 @@ describe( 'Shopper → Cart', () => {
 	} );
 
 	afterAll( async () => {
-		await page.goto( `${ BASE_URL }/?teardown_cross_sells` );
-		// eslint-disable-next-line jest/no-standalone-expect
-		await expect( page ).toMatch( 'Cross-Sells products teared down.' );
 		await shopper.block.emptyCart();
 	} );
 
