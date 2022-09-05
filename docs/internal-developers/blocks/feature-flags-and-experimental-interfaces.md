@@ -2,19 +2,19 @@
 
 ## Table of contents <!-- omit in toc -->
 
-- [Blocks behind flags](#blocks-behind-flags)
-    - [Feature plugin flag](#feature-plugin-flag)
-    - [Experimental flag](#experimental-flag)
-- [Features behind flags](#features-behind-flags)
-    - [Feature plugin flag](#feature-plugin-flag-1)
-    - [Experimental plugin flag](#experimental-plugin-flag)
-- [Processes and commands that use a flag](#processes-and-commands-that-use-a-flag)
-- [Usages of `__experimental` prefix](#usages-of-__experimental-prefix)
-    - [PHP filters and actions](#php-filters-and-actions)
-    - [JS methods](#js-methods)
-    - [Slots](#slots)
-    - [Misc](#misc)
-- [Usages of `experimental` prefix](#usages-of-experimental-prefix)
+-   [Blocks behind flags](#blocks-behind-flags)
+    -   [Feature plugin flag](#feature-plugin-flag)
+    -   [Experimental flag](#experimental-flag)
+-   [Features behind flags](#features-behind-flags)
+    -   [Feature plugin flag](#feature-plugin-flag-1)
+    -   [Experimental plugin flag](#experimental-plugin-flag)
+-   [Processes and commands that use a flag](#processes-and-commands-that-use-a-flag)
+-   [Usages of `__experimental` prefix](#usages-of-__experimental-prefix)
+    -   [PHP filters and actions](#php-filters-and-actions)
+    -   [JS methods](#js-methods)
+    -   [Slots](#slots)
+    -   [Misc](#misc)
+-   [Usages of `experimental` prefix](#usages-of-experimental-prefix)
 
 We have feature gating system setup in our plugin that defines what is accessible to the public and what is not, it has three phases:
 
@@ -137,4 +137,3 @@ Current list of events:
 🐞 Found a mistake, or have a suggestion? [Leave feedback about this document here.](https://github.com/woocommerce/woocommerce-blocks/issues/new?assignees=&labels=type%3A+documentation&template=--doc-feedback.md&title=Feedback%20on%20./docs/internal-developers/blocks/feature-flags-and-experimental-interfaces.md)
 
 <!-- /FEEDBACK -->
-
